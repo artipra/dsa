@@ -20,7 +20,7 @@ package stream;
 //there's another form of reduce() method
 //double reduce(double identity,DoubleBinaryOperator op) ... its return double as identity can be used as initial value if stream is not empty
 // and identity provides a default result if stream is empty
-//page no 570,572,552,576,586,587
+//page no 570,572,552,576,586,587,601,602,603,611
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,12 +28,13 @@ import java.util.Optional;
 import java.util.OptionalDouble;
 
 public class OperatingOnStream {
+    Thread t;
     public static void main(String[] args) {
      // takes list of integer,if square is > 20 then count
         List<Integer> list = Arrays.asList(1,5,3,8,6);
         long count = list.stream().map(d -> d*d).filter(d -> d>20).count();
         System.out.println(count);
-        // In this steam cant print number and its square but workaround
+        // In this stream cant print number and its square but workaround
         // is peek() method takes consumer and allows you to peek into a stream as data is flowing
         long countPeek =
                 list

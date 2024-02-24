@@ -25,11 +25,13 @@ public class StreamCreation {
     public static void main(String[] args) {
      //stream.Of()
      Stream<String> streamStringOf = Stream.of("abc","cdf","ghi");
+     System.out.println("stream of---------------"+streamStringOf.count());
      Optional<String> optionalString = streamStringOf.findFirst();
         System.out.println(optionalString);
      //Collection.stream()
         //List
        List<Double> listStream = Arrays.asList(102.3,105.03,100.66);
+        System.out.println("stream of---------------"+Stream.of(listStream).count());
        long cnt = listStream
        .stream()
        .filter(a -> a > 101)
