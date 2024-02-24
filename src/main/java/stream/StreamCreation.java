@@ -13,12 +13,13 @@ import java.util.stream.Stream;
 //stream.Of()
 //Collection.stream()
 //Arrays.stream()
-//primitive Type stream
+//primitive Type stream -IntStream.Of(), LongStream.Of(),DoubleStreamof()
 // File stream
 //stream() is default method in Collection interface, so inherited by all classes which implements Collection interface
 //Map is not collection, If you want stream of map you must first use entrySet() to trun Map into set
 // primitive stream design to avoid autoboxing DoubleStream,IntStream and LongStream
 // lines() static method of Files return a stream, it returns one line at a time
+//stream.empty() -- to create empty stream
 public class StreamCreation {
 
 
