@@ -1,5 +1,7 @@
 package stream.demoproject;
 
+import org.w3c.dom.ls.LSOutput;
+
 import javax.swing.*;
 import java.sql.SQLOutput;
 import java.util.*;
@@ -14,114 +16,78 @@ public class App {
         EmployeeFactory employeeFactory = new EmployeeFactory();
         List<Employee> employeeList = employeeFactory.getAllEmployee();
 
-//        List<List<Project>> list1 = Arrays.asList(employeeList.get(0).getProjects(),employeeList.get(1).getProjects(),employeeList.get(2).getProjects());
-//        list1.stream().flatMap(List::stream).forEach(
-//                s -> {
-//                    System.out.println("project(name="+s.getName()+", team="+s.getTeam() +", projectManager="+s.getProjectManager()+")");
-//                });
-        //List all distinct project in non-ascending order.
+        //List all distinct projects in non-ascending order.
         Comparator byName = Comparator.comparing(Project::getName);
                  employeeList
-                .stream().map(e -> e.getProjects())
+                .stream()
+                 .map(e -> e.getProjects())
                 .flatMap(List::stream)
                 .distinct()
                 .sorted((a,b) -> -a.getName().compareTo(b.getName()))
                 .forEach(System.out::println);
-        employeeList.stream().map(e -> e.getProjects()).flatMap(List::stream).distinct().sorted(byName.reversed()).forEach(System.out::println);
+        Object list1 = employeeList
+                .stream()
+                .map(e -> e.getProjects())
+                .flatMap(List::stream)
+                .distinct()
+                .sorted(byName.reversed())
+                .collect(Collectors.toList());
+        System.out.println();
+        System.out.println(list1);
 
 //        Print full name of any employee whose firstName starts with ‘A’.
-         employeeList.stream().filter(s -> s.getFirstName().startsWith("A"))
-                 .forEach(name -> System.out.println(name.getFirstName() +" "+ name.getLastName()));
+        employeeList.stream().filter(e ->e.getFirstName().startsWith("A"))
+                .forEach( s -> System.out.println(s.getFirstName()+" "+s.getLastName()));
 
-//        List of all employee who joined in year 2023 (year to be extracted from employee id i.e., 1st 4 characters)
 
-        System.out.println("Q3");
-        employeeList
-                .stream()
-                .filter(emp -> emp.getId().substring(0,4).equals("2023"))
-                .forEach(System.out::println);
+//      List of all employee who joined in year 2023 (year to be extracted from employee id i.e., 1st 4 characters)
+        List<Employee> emp1 = employeeList.stream().filter(s -> s.getId().substring(0,4).equals("2023")).collect(Collectors.toList());
+        System.out.println(emp1);
 
-        System.out.println("Q4");
-        Comparator<Employee> name = Comparator.comparing(Employee::getFirstName);
-        Comparator<Employee> salary = Comparator.comparing(Employee::getSalary);
-        employeeList.stream().sorted(name.thenComparing(salary)).forEach(System.out::println);
+//        4. Sort employees based on firstName, for same firstName sort by salary.
+        Comparator<Employee> firstNameThenSalary = Comparator.comparing(Employee::getFirstName).thenComparing(Employee::getSalary);
+        List<Employee> res3 = employeeList.stream().sorted(firstNameThenSalary).collect(Collectors.toList());
+        System.out.println(res3);
 
-        System.out.println("q5");
-        employeeList.stream().sorted(salary).forEach(System.out::println);
-        Optional<Employee> thirdSalary = employeeList.stream().sorted(salary.reversed()).skip(2).findFirst();
-        List<Employee> thirdHighestSalary = employeeList.stream().filter( e -> e.getSalary() == thirdSalary.get().getSalary()).collect(Collectors.toList());
-        System.out.println(thirdHighestSalary);
-
-        Map.Entry<Integer,List<Employee>> map =
-                 employeeList
-                .stream()
-                .collect(Collectors.groupingBy(Employee::getSalary,Collectors.toList()))
-                .entrySet()
-                .stream()
-                .sorted(Collections.reverseOrder(Map.Entry.comparingByKey()))
+//       5 Print names of all employee with 3rd highest salary. (generalise it for nth highest salary).
+        Map.Entry<Integer,List<Employee>> res4 = employeeList.stream().collect(Collectors.groupingBy(Employee::getSalary))
+                .entrySet().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByKey()))
                 .collect(Collectors.toList()).get(2);
-            System.out.println(map.getValue());
+        System.out.println(res4);
+        System.out.println();
 
-        System.out.println("Q6");
-        OptionalInt op2 = employeeList.stream().mapToInt(Employee::getSalary).min();
-        System.out.println(op2.getAsInt());
-        System.out.println("q7");
+//     7. Print list of all employees with min salary.
+       List<Employee> minSalarys = employeeList.stream().collect(Collectors.groupingBy(Employee::getSalary,TreeMap::new,Collectors.toList()))
+               .firstEntry().getValue();
+        System.out.println(minSalarys);
+        System.out.println("Q8");
+//     8. List of people working on more than 2 projects.
+        List<Employee> res5 = employeeList.stream().filter(e -> e.getProjects().size() > 2).collect(Collectors.toList());
+        System.out.println(res5);
 
-
-        List<Employee> minSalaryEmployees =
-                employeeList
-                        .stream()
-                        .collect(Collectors.groupingBy(Employee::getSalary,TreeMap::new,Collectors.toList())).firstEntry().getValue();
-
-        System.out.println(minSalaryEmployees);
-        System.out.println("q8");
-        List<Employee> workinmorethan2projects =
-                 employeeList
-                .stream()
-                .filter(e -> e.getProjects().size() > 2)
-                .collect(Collectors.toList());
-        System.out.println(workinmorethan2projects);
-
-        System.out.println("Q9");
-        long count = employeeList.stream().mapToInt(Employee::getTotalLaptopsAssigned).sum();
-        System.out.println(count);
-
+//     10. Count of all projects with Robert Downey Jr as PM.
         System.out.println("Q10");
-
-        long projectCount =
-                employeeList
-                .stream()
-                .flatMap(pm ->pm.getProjects().stream()).filter(p -> "Robert Downey Jr".equalsIgnoreCase(p.getProjectManager())).distinct().count();
-        System.out.println(projectCount);
-
+        long res6 = employeeList.stream().map(Employee::getProjects).flatMap(List::stream).filter(p -> p.getProjectManager().equals("Robert Downey Jr")).distinct().count();
+        System.out.println(res6);
         System.out.println("Q11");
-        List<String> projectWithPM =
-                employeeList
-                        .stream()
-                        .flatMap(pm ->pm.getProjects().stream()).filter(p -> "Robert Downey Jr".equalsIgnoreCase(p.getProjectManager()))
-                        .distinct().map(project -> project.getName())
-                        .collect(Collectors.toList());
-        System.out.println(projectWithPM);
-//        12. List of all people working with Robert Downey Jr.
-        System.out.println("Q12");
-        String pm = "Robert Downey Jr";
+//        11. List of all projects with Robert Downey Jr as PM.
+        List<Project> res7= employeeList.stream().map(Employee::getProjects).flatMap(List::stream).filter(p -> p.getProjectManager().equals("Robert Downey Jr")).distinct().collect(Collectors.toList());
+        System.out.println(res7);
+        System.out.println("Q13");
+//        13. Create a map based on this data, they key should be the year of joining, and value should be list of all the employees who joined the particular year.
+        Map<String,List<Employee>> res8 = employeeList.stream().collect(Collectors.groupingBy(e -> e.getId().substring(0,4)));
+        System.out.println(res8);
 
-employeeList.stream().filter(
-    each -> each.getProjects().stream().anyMatch(eachP -> pm.equalsIgnoreCase(eachP.getProjectManager())))
-    .forEach(System.out::println);
 
-//  13. Create a map based on this data, they key should be the year of joining, and value should be
-//        list of all the employees who joined the particular year.
+        System.out.println("Q14");
+//     14 Create a map based on this data, the key should be year of joining and value should be the count of people joined in that particular year.
+        Map<String,Long> res9 = employeeList.stream().collect(Collectors.groupingBy(e -> e.getId().substring(0,4),Collectors.counting()));
+        System.out.println(res9);
 
-        Map<String, List<Employee>> employeeMapWithYear =
-                employeeList.stream().collect(Collectors.groupingBy(e -> e.getId().substring(0,4)));
-
-        System.out.println(employeeMapWithYear);
-        System.out.println("q14");
-        Map<String, Long> employeeMapWithYearCount =
-                employeeList.stream().collect(Collectors.groupingBy(e -> e.getId().substring(0,4),Collectors.counting()));
-
-        System.out.println(employeeMapWithYearCount);
-
+        ArrayList<Number> list = new ArrayList<>();
+        list.add(1);
+        list.add(1L);
     }
+
+
 }

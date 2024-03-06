@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.SQLOutput;
+import java.time.Clock;
 import java.util.*;
 import java.util.function.DoubleToLongFunction;
 import java.util.stream.Collectors;
@@ -24,6 +25,13 @@ public class StreamCreation {
 
 
     public static void main(String[] args) {
+       Integer i1 = 10;
+        Integer i2 = 10;
+        Integer i3 = 10;
+        Integer[] arrr = new Integer[3];
+        arrr[0] =i1;arrr[1] =i1;arrr[2] =i3;
+        Stream.of(arrr,i2,i3).forEach(System.out::println);
+
      //stream.Of()
      Stream<String> streamStringOf = Stream.of("abc","cdf","ghi");
      System.out.println("stream of---------------"+streamStringOf.count());

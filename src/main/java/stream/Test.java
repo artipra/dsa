@@ -4,91 +4,68 @@ import lombok.Getter;
 import lombok.ToString;
 import org.w3c.dom.ls.LSOutput;
 
+import java.sql.SQLOutput;
 import java.util.*;
 import java.util.stream.*;
-
 import static java.util.stream.Collectors.averagingInt;
 
 class Test{
 
-    public static void main(String [] args){
+    public static void main(String [] args) {
+//        1. Write a Java program to calculate the average of a list of integers using streams.
+          List<Integer> list1 = Arrays.asList(1,2,3);
+          OptionalDouble op1 = list1.stream().mapToInt(i ->i).average();
+          OptionalDouble op2 = list1.stream().mapToInt(Integer::intValue).average();
+          Double op3 = list1.stream().mapToInt(Integer::intValue).average().orElse(0.0);
+          OptionalDouble op4 = list1.stream().mapToDouble(Integer::doubleValue).average();
+          Double op5 = list1.stream().collect(Collectors.averagingInt(Integer::intValue));
+          System.out.println(op5);
 
-        List<Integer> list = Arrays.asList();
-        Double op = list.stream().mapToInt(Integer::intValue).average().orElse(0.0);
-        System.out.println(op);
+//        2. Write a Java program to convert a list of strings to uppercase or lowercase using streams.
+          List<String> list2 = Arrays.asList("a","b","c","d","c");
+          list2.stream().map(String::toUpperCase).forEach(System.out::print);
+          list2.stream().map(s -> s.toLowerCase()).forEach(System.out::println);
 
+//        3. Write a Java program to calculate the sum of all even, odd numbers in a list using streams.
+          List<Integer> list3 = Arrays.asList(1,2,3,4);
+          double sumEven = list3.stream().filter( i ->i%2==0).mapToDouble(Integer::doubleValue).sum();
+          int sumOdd = list3.stream().filter( i ->i%2!=0).mapToInt(Integer::intValue).sum();
+          System.out.println(sumEven +" "+sumOdd);
 
-        List<String> list1 = Arrays.asList("ab","BM","Mb");
-        List<String> upper = list1.stream().map(String ::toUpperCase).collect(Collectors.toList());
-        List<String> lower = list1.stream().map(String::toLowerCase).collect(Collectors.toList());
-        System.out.println(upper);
-        System.out.println(lower);
+//        4. Write a Java program to remove all duplicate elements from a list of integer using streams.
+        List<Integer> list4 = Arrays.asList(1,2,3,1,2,2);
+        list4.stream().distinct().forEach(System.out::println);
+        Set<Integer> set1 = list4.stream().collect(Collectors.toSet());
+        System.out.println(set1);
 
-        List<Integer> list3 = Arrays.asList(1,2,3);
-        int even = list3.stream().filter(i -> i%2 == 0).mapToInt(Integer::intValue).sum();
-        double odd = list3.stream().filter(i -> i%2 != 0).mapToDouble(Integer::doubleValue).sum();
-        System.out.println("even "+even +" odd "+odd);
+//        5. Write a Java program to count the number of strings in a list that start with a specific letter using streams.
+        List<String> list5 = Arrays.asList("dnb","acb","lop","aaa","abc","alpo");
+        long res1 = list5.stream().filter(s -> s.startsWith("a")).count();
+        System.out.println(res1);
 
+//        6. Write a Java program to sort a list of strings in alphabetical order, ascending and descending using streams.
+        List<String> list6 = Arrays.asList("dnb","acb","lop","aaa","abc","alpo");
+        List<String> res3 =  list6.stream().sorted().collect(Collectors.toList());
+        System.out.println(res3);
+        List<String> res2 = list6.stream().sorted((s1,s2) ->  -s1.compareTo(s2)).collect(Collectors.toList());
+        System.out.println(res2);
+        List<String> res4 = list6.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
+        System.out.println(res4);
 
-        List<Integer> list4 = Arrays.asList(1,2,5,2,2);
-        List<Integer> unique = list4.stream().distinct().collect(Collectors.toList());
-        Set<Integer> unique1 = list4.stream().collect(Collectors.toSet());
-        System.out.println(unique);
-        System.out.println(unique1);
+//        7. Write a Java program to find the maximum and minimum values in a list of integers using streams.
+        List<Integer> list7 = Arrays.asList(1,3,6,9,2,7,8,18);
+        OptionalInt op6 = list7.stream().mapToInt(Integer::intValue).min();
+        Optional<Integer> op7 = list7.stream().collect(Collectors.maxBy((o1,o2) -> o1.intValue() - o2.intValue()));
+        Optional<Integer> op8 = list7.stream().max(Integer::compare);
+        Integer op9 = list7.stream().max(Integer::compare).orElse(0);
+        System.out.println(op6 +" "+ op7 +" "+ op8+" "+op9);
 
-
-        List<String> list5 = Arrays.asList("abc","mn","ab","aaa","Arti");
-        List<String> uniqueList = list5.stream().filter(s -> s.startsWith("a")).collect(Collectors.toList());
-        System.out.println(uniqueList);
-
-
-        List<String> list6 = Arrays.asList("abc","mn","tb","aaa","arti");
-        Comparator<String> byName = Comparator.comparing(String::toString);
-        List<String> sortList1 = list6.stream().sorted(byName).collect(Collectors.toList());
-
-//        List<String> sortList2 = list6.stream().sorted((a,b) -> -a.compareTo(b)).collect(Collectors.toList());
-        List<String> sortList3 = list6.stream().sorted(byName.reversed()).collect(Collectors.toList());
-        System.out.println(sortList1);
-//        System.out.println(sortList2);
-        System.out.println(sortList3);
-
-        List<Integer> list7 = Arrays.asList(5,2,9,7,0,5);
-        OptionalInt op1 = list7.stream().mapToInt(Integer::intValue).max();
-        System.out.println(op1.getAsInt());
-        OptionalInt op2 = list7.stream().mapToInt(Integer::intValue).min();
-        System.out.println(op2.getAsInt());
-
-
-        Optional<Integer> op3 = list7.stream().sorted().limit(1).findFirst();
-        Optional<Integer> op4 = list7.stream().sorted((a,b) -> -a.compareTo(b)).limit(1).findFirst();
-        System.out.println(op3.get());
-        System.out.println(op4.get());
-
-        Integer op5 = list7.stream().min(Integer::compare).orElse(0);
-        System.out.println(op5);
-
-
-        List<Integer> list8 = Arrays.asList(5,2,9,7,0,5);
-        Optional<Integer> op6 = list8.stream().distinct().sorted().skip(1).findFirst();
-        Optional<Integer> op7 = list8.stream().distinct().sorted((a,b) -> -a.compareTo(b)).skip(1).findFirst();
-        System.out.println(op6.get());
-        System.out.println(op7.get());
-    }
-
-}
-
-@Getter
-@AllArgsConstructor
-@ToString
-class Employee{
-    private String name;
-    private int age;
-    private double salary;
-    private String gender;
+//        8. Write a Java program to find the second smallest and largest elements in a list of integers using streams.
+        List<Integer> list8 = Arrays.asList(1,2,3,4,6,8,-1);
+        Optional<Integer> op10 = list8.stream().sorted().skip(1).findFirst();
+        Integer op11 = list8.stream().sorted((a,b) -> b.compareTo(a)).skip(1).findFirst().orElse(0);
+        System.out.println(op10.get() +"  "+ op11);
 
 
-    Employee(String name,int age){
-        this.name = name;
-        this.age = age;
     }
 }
