@@ -3,7 +3,7 @@ package string;
 public class ReverseString {
 
     public static void main(String [] args){
-        System.out.println(reverse2("abcd"));
+        System.out.println(reverse3("abcd"));
     }
 
     static String reverse(String str){
@@ -30,6 +30,16 @@ public class ReverseString {
         byte[] res = new byte[arr.length];
         for(int i=0; i<arr.length; i++){
             res[i] = arr[arr.length-1-i];
+        }
+        return new String(res);
+    }
+
+
+    static String reverse3(String str){
+        byte[] arr = str.getBytes();
+        byte[] res = new byte[arr.length];
+        for(int i=arr.length-1; i>=0; i--){
+            res[arr.length-i-1] = arr[i];
         }
         return new String(res);
     }

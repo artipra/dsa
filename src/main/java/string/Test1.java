@@ -31,6 +31,7 @@ public class Test1 {
 //   }
 
    public static void main(String[] args) {
+
       String s11 = "scaler";
       String s12 = new String("scaler");
       s12 = s12.intern();

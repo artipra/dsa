@@ -15,6 +15,7 @@ public class GeneratingStream {
         Stream.iterate(0, s-> s+1);
         //infinte loop will run
         //Stream.iterate(0, s-> s+1).forEach(System.out::println);
-
+      //  int i=0;
+          Stream.generate(() -> 1).forEach(System.out::println);
     }
 }
