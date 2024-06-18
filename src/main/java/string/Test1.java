@@ -34,7 +34,9 @@ public class Test1 {
 
       String s11 = "scaler";
       String s12 = new String("scaler");
-      s12 = s12.intern();
+       s12 =  s12.intern();
+       System.out.println("-------ddd------"+s11.hashCode());
+       System.out.println("-------ddd------"+s12.hashCode());
        System.out.println(s11 == s12);
       System.out.println(reverse("abcd"));
       System.out.println(reverse("abcde"));

@@ -1,5 +1,6 @@
 package sorting;
 
+//compare adjacent elements
 public class BubbleSort {
 
 

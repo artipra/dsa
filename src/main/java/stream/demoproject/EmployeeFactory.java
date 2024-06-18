@@ -5,10 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class EmployeeFactory {
-    ArrayList<Employee> employees = new ArrayList<>();
+    static ArrayList<Employee> employees;
 
-    public List<Employee> getAllEmployee(){
-
+    public static List<Employee> getAllEmployee() {
+        employees = new ArrayList<>();
         Project Delta = new Project("Delta Model", "Login", "Robert Downey Jr");
         Project Beta = new Project("Beta Enhancement", "Authentication", "Chris");
         Project TwoFactorAuth = new Project("Two Factor Authentication", "Authentication", "MSD");
@@ -19,7 +19,7 @@ public class EmployeeFactory {
         Project RemoveUsers = new Project("Remove Invalid User", "Proxy", "Jeetu");
         Project SiteReliability = new Project("Site Reliability", "Admin", "Zaheer Khan");
         Project DataTransition = new Project("Data Transition", "Data", "Atif Aslam");
-        Project TwoPhaseDeployment =new Project("Two Phase Deployment", "Deployment", "Shaktiman");
+        Project TwoPhaseDeployment = new Project("Two Phase Deployment", "Deployment", "Shaktiman");
 
         employees.add(new Employee("2020Emp0234", "Bhaskar", "Sharan", 900000, 1, Arrays.asList(Delta, Beta)));
         employees.add(new Employee("2012Emp1923", "Dev", "Sharma", 3500000, 3, Arrays.asList(Pegasus, CustomerOnboarding, Beta, SiteReliability)));

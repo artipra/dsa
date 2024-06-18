@@ -14,10 +14,12 @@ import java.util.stream.Stream;
 //stream.Of()
 //Collection.stream()
 //Arrays.stream()
-//primitive Type stream -IntStream.Of(), LongStream.Of(),DoubleStreamof()
+//primitive Type stream -IntStream.Of(), LongStream.Of(),DoubleStream.Of()
 // File stream
-//stream() is default method in Collection interface, so inherited by all classes which implements Collection interface
-//Map is not collection, If you want stream of map you must first use entrySet() to trun Map into set
+//stream() is default method in Collection interface, so inherited by all classes
+// which implements Collection interface
+//Map is not collection, If you want stream of map you must first use entrySet()
+// to turn Map into set
 // primitive stream design to avoid autoboxing DoubleStream,IntStream and LongStream
 // lines() static method of Files return a stream, it returns one line at a time
 //stream.empty() -- to create empty stream
@@ -30,11 +32,11 @@ public class StreamCreation {
         Integer i3 = 10;
         Integer[] arrr = new Integer[3];
         arrr[0] =i1;arrr[1] =i1;arrr[2] =i3;
-        Stream.of(arrr,i2,i3).forEach(System.out::println);
+        Stream.of(i2,i3,arrr,i1).forEach(System.out::println);
 
      //stream.Of()
      Stream<String> streamStringOf = Stream.of("abc","cdf","ghi");
-     System.out.println("stream of---------------"+streamStringOf.count());
+//     System.out.println("stream of---------------"+streamStringOf.count());
      Optional<String> optionalString = streamStringOf.findFirst();
         System.out.println(optionalString);
      //Collection.stream()
@@ -58,6 +60,9 @@ public class StreamCreation {
         System.out.println(map.entrySet().stream().filter(d -> d.getKey()=="b").findAny());
        //Arrays.stream()
         String[] str = {"abc","def"};
+        int[] abc = {1,55,66};
+        int i23 = 122222222;
+        Stream.of(i23,i23).forEach(System.out::println);
         Stream<String> streamArray = Arrays.stream(str);
         Optional<String> strOptional = streamArray.findFirst();
         System.out.println(strOptional);

@@ -9,7 +9,7 @@ public class Project {
     private String team;
     private String projectManager;
 
-    Project(){
+    Project() {
     }
 
     public Project(String name, String team, String projectManager) {
