@@ -9,8 +9,8 @@ public class ProducerConsumerSol3 {
         static final int size = 3;
         public static void main(String[] args) throws InterruptedException{
             LinkedList<Double> list = new LinkedList<>();
-            Semaphore semprod = new Semaphore(0);
-            Semaphore semcon = new Semaphore(0);
+            Semaphore semprod = new Semaphore(1);
+            Semaphore semcon = new Semaphore(1);
             Runnable r1 = () -> {
                 while(true) {
                     try {
@@ -20,7 +20,7 @@ public class ProducerConsumerSol3 {
                     }
                     double val = Math.random();
                     System.out.println("adding by  "+val +" "+ Thread.currentThread().getName());
-                    list.add(val);
+                    while(list.size() < 5)list.add(val);
                     semprod.release();
                 }
             };
@@ -29,20 +29,22 @@ public class ProducerConsumerSol3 {
                 while(true) {
 
                     try {
-                        semcon.acquire();
-                        System.out.println("removing " + list.removeFirst() +" "+ Thread.currentThread().getName());
+                        semprod.acquire();
+                        double val =0;
+                        if(list.size() > 0)val = list.removeFirst();
+                        System.out.println("removing " + val +" "+ Thread.currentThread().getName());
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
-                    semcon.release();
+                    semprod.release();
                 }
             };
             Thread producer = new Thread(r1);
             Thread consumer = new Thread(r2);
             producer.start();
             consumer.start();
-            producer.join();
-            consumer.join();
+//            producer.join();
+//            consumer.join();
         }
     }
 

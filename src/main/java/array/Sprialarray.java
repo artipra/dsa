@@ -1,5 +1,6 @@
 package array;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Sprialarray {
@@ -14,8 +15,8 @@ public class Sprialarray {
                 arr[i][j] = count++;
             }
         }
-        Arrays.stream(arr).flatMapToInt(Arrays::stream).forEach(System.out::print);
-        sprialPrint(arr);
+      //  Arrays.stream(arr).flatMapToInt(Arrays::stream).forEach(System.out::print);
+       // sprialPrint(arr);
         //generateMatrix(2);
 //        for(int[] a: arr){
 //            for(int val: a){
@@ -23,7 +24,37 @@ public class Sprialarray {
 //            }
 //            System.out.println();
 //        }
+        System.out.println(generateMatrix2(2));
+    }
 
+    public static ArrayList<ArrayList<Integer>> generateMatrix2(int A) {
+        ArrayList<ArrayList<Integer>> res = new ArrayList();
+        for(int i=0; i<A; i++){
+            res.add(new ArrayList<Integer>());
+        }
+
+        for(ArrayList<Integer> list : res){
+            for(int i=0; i<A; i++){
+                list.add(0);
+            }
+        }
+
+        int i =0,row=0,col=0,number=1;
+        while(i<A/2){
+            for(; col<A-1-i; col++)
+                res.get(row).set(col,number++);
+            for(; row<A-1-i; row++)
+                res.get(row).set(col,number++);
+            for(; col>i; col--)
+                res.get(row).set(col,number++);
+            for(; row>i; row--)
+                res.get(row).set(col,number++);
+            i++;
+            row = i;
+            col = i;
+        }
+        if(A%2 != 0)res.get(row).set(col,number);
+        return res;
     }
 
     static void sprialPrint(int [][] arr){

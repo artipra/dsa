@@ -29,7 +29,7 @@ public class ProducerConsumerSol2 {
         Thread consumer = new Thread(r2);
         producer.start();
         consumer.start();
-       producer.join();
-       consumer.join();
+      // producer.join();
+//       consumer.join();
     }
 }
