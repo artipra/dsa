@@ -1,9 +1,26 @@
 package string;
 
+import java.util.ArrayList;
+
 public class ReverseString {
 
     public static void main(String [] args){
-        System.out.println(reverse3("abcd"));
+       ArrayList<Character> s = new ArrayList<>();
+       s.add('S');s.add('c');s.add('a');s.add('l');s.add('e');
+       s.add('r');s.add('A');s.add('c');s.add('a');s.add('d');
+       s.add('e');s.add('m');s.add('y');s.add('2');s.add('0');
+       s.add('2');s.add('0');s.add('%');
+        System.out.println(solve(s));
+    }
+
+    public static int solve(ArrayList<Character> A) {
+        for(int i=0; i<A.size(); i++){
+            if((48 <= A.get(i) && A.get(i) <= 57) ||
+                    (65 <= A.get(i) && A.get(i) <= 90) ||
+                     (97 <= A.get(i) && A.get(i) <= 122)) continue;
+            return 0;
+        }
+        return 1;
     }
 
     static String reverse(String str){

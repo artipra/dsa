@@ -3,7 +3,11 @@ package bitwise;
 public class DecimalToAnyBase {
 
     public static void main(String[] args) {
-        System.out.println(DecimalToAnyBase(4,2));
+        int i=4;
+        System.out.println(i);
+        i = i<<31;
+        System.out.println(i);
+        //System.out.println(DecimalToAnyBase(4,2));
     }
 
 

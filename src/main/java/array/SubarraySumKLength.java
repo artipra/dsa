@@ -7,6 +7,8 @@ import java.util.List;
 public class SubarraySumKLength {
 
     public static void main(String[] args) {
+       // long ab = 11000000000000000000000000000000;
+        System.out.println(Long.parseUnsignedLong("11000000000000000000000000000000"));
 
 //        int arr[] = {-3,4,-2,5,3,-2,8,2,-1,4};
 //        int ans[] = solve(arr,4);
@@ -14,8 +16,8 @@ public class SubarraySumKLength {
 //            System.out.print(a+", ");
 //        }
 
-        List<Integer> a = Arrays.asList(6,3,3,6,7,8,7,3,7);
-        System.out.println(solve1(a,2,10));
+//        List<Integer> a = Arrays.asList(6,3,3,6,7,8,7,3,7);
+//        System.out.println(solve1(a,2,10));
     }
     public static int solve1(List<Integer> A, int B, int C) {
         int sum =0;
