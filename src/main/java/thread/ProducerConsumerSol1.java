@@ -16,8 +16,9 @@ public class ProducerConsumerSol1 {
                     synchronized (list) {
                         if (list.size() == size) list.wait();
                         else {
-                            System.out.println("adding by  "  + Thread.currentThread().getName());
-                            list.add(Math.random());
+                            double val = Math.random();
+                            System.out.println("adding by  "  + val +"  " +Thread.currentThread().getName());
+                            list.add(val);
                         }
                     }
                 }

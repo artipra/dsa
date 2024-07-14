@@ -31,8 +31,9 @@ public class ProducerConsumerSol3 {
                     try {
                         semprod.acquire();
                         double val =0;
-                        if(list.size() > 0)val = list.removeFirst();
+                        while(list.size() > 0){ val = list.removeFirst();
                         System.out.println("removing " + val +" "+ Thread.currentThread().getName());
+                        }
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -41,8 +42,12 @@ public class ProducerConsumerSol3 {
             };
             Thread producer = new Thread(r1);
             Thread consumer = new Thread(r2);
+            Thread producer1 = new Thread(r1);
+            Thread consumer1 = new Thread(r2);
             producer.start();
             consumer.start();
+            producer1.start();
+            consumer1.start();
 //            producer.join();
 //            consumer.join();
         }
