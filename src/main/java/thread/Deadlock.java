@@ -3,6 +3,7 @@ public class Deadlock {
     public static void main(String[] args) {
         Integer i1 = 10;
         Integer i2 = 66;
+        // java 8 implementation
         Runnable r1 = () -> {
                 synchronized (i1){
                     System.out.println("acquired the lock " + i1 +" object "+ Thread.currentThread());
