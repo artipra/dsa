@@ -3,7 +3,7 @@ import java.util.*;
 public class Anagram{
 
     public static void main(String[] args) {
-    System.out.println(isAnagram2("spot","post"));
+    System.out.println(isAnagram("bird","post"));
     }
 
     static boolean isAnagram2(String s1, String s2){
@@ -44,15 +44,13 @@ public class Anagram{
 
         for(int i=0; i<s2.length(); i++){
             if(hm.containsKey(s2.charAt(i))){
-                hm.put(s2.charAt(i),hm.get(s2.charAt(i))-1);
+               int val = hm.get(s2.charAt(i));
+               if(val == 1) hm.remove(s2.charAt(i));
+               else hm.put(s2.charAt(i),hm.get(s2.charAt(i))-1);
             }
             else return false;
         }
 
-        Set<Character> set = hm.keySet();
-        for(char c : set){
-            if(hm.get(c) != 0) return false;
-        }
-        return true;
+        return hm.isEmpty();
     }
 }

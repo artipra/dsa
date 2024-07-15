@@ -1,10 +1,13 @@
 package string;
 
-import javax.swing.*;
+import java.util.Comparator;
+import java.util.List;
 import java.util.StringJoiner;
 import java.util.StringTokenizer;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
-public class Test1 {
+public class StringReverse{
 
 
    static String reverse(String str){
@@ -14,10 +17,32 @@ public class Test1 {
       for(int i =arr1.length-1; i>=0; i--){
          sb.append(arr1[i]);
       }
-
       return new String(sb);
-
    }
+
+    public static String reverse1(String str) {
+        StringBuffer sb = new StringBuffer();
+        for(int i=str.length()-1; i>=0; i--){
+            sb.append(str.charAt(i));
+        }
+        return sb.toString();
+    }
+
+    public static String reverse2(String str) {
+       StringBuffer sb = new StringBuffer();
+
+        str.chars()
+                .mapToObj(c -> (char)c).sorted((a, b) -> b.compareTo(a))
+                        .collect(Collectors.toList()).forEach(sb::append);
+
+       return sb.toString();
+
+
+     //   String result = String.join("", charList.stream().map(String::valueOf).toArray(String[]::new));
+
+    }
+
+
 //   static String reverse(String str){
 //      int m = str.length()/2;
 //      StringBuilder sb = new StringBuilder();
@@ -31,7 +56,7 @@ public class Test1 {
 //   }
 
    public static void main(String[] args) {
-
+       System.out.println(reverse2("abcdef"));
       String s11 = "scaler";
       String s12 = new String("scaler");
        s12 =  s12.intern();

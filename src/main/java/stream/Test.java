@@ -2,7 +2,6 @@ package stream;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
-import org.w3c.dom.ls.LSOutput;
 import stream.demoproject.Employee;
 import stream.demoproject.EmployeeFactory;
 import stream.demoproject.Project;
@@ -10,6 +9,7 @@ import stream.demoproject.Project;
 import java.sql.SQLOutput;
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.*;
 import static java.util.stream.Collectors.averagingInt;
@@ -126,6 +126,53 @@ class Test{
                   ).collect(Collectors.toList());
         for(Employee p1 : asPM)
         System.out.println(p1);
+
+
+
+        List<Integer> list_2 = Arrays.asList(1,2,6,5,5,5,5,9,9,6);
+        list_2.stream().distinct().forEach(System.out::println);
+        Set<Integer> list_2_res = list_2.stream().collect(Collectors.toSet());
+        System.out.println(list_2_res);
+
+
+        List<Integer> list_1 = Arrays.asList(1,2,5,7,8,9,6);
+        Map<Boolean,List<Integer>> evenoddList = list_1.stream().collect(Collectors.partitioningBy(c -> c%2 != 0));
+        System.out.println("evenoddList "+evenoddList);
+
+        List<Integer> list_3 = Arrays.asList(1,2,3,4,8,9,4,2,1,9);
+        Map<Integer,Long> frequencyCount = list_3.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
+        System.out.println(frequencyCount);
+
+        String str = "thnghtgsanvhgasdfnht";
+        Map<Character,Long> freString = str.chars().
+                mapToObj(i -> (char)i).collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
+        System.out.println(freString);
+
+       List<Integer> list_4 = Arrays.asList(1,4,3,8,95,1,6);
+       list_4.stream().sorted(Comparator.reverseOrder()).forEach(System.out::println);
+
+       List<String> list_5 = Arrays.asList("hello","facebook","welcome","easy");
+       String str_4 = list_5.stream().collect(Collectors.joining(",","[","]"));
+        System.out.println(str_4);
+
+        List<Integer> list_6 = Arrays.asList(0,5,10,3,25,30,9,80,40,75);
+        List<Integer> res_6 = list_6.stream().filter(c -> c%5 == 0).collect(Collectors.toList());
+        System.out.println(res_6);
+
+        System.out.println(list_6.stream().mapToInt(Integer::intValue).min());
+        System.out.println(list_6.stream().mapToInt(Integer::intValue).max());
+
+        int[] a = {1,8,6,7,9,10};
+        int[] b = {1,23,6,-25,9,-10};
+
+        int[] result_a = IntStream.concat(Arrays.stream(a),Arrays.stream(b)).sorted().toArray();
+        for(int val : result_a) System.out.print(val+" ");
+
+        System.out.println();
+        int[] result_b = IntStream.concat(Arrays.stream(a),Arrays.stream(b)).sorted().distinct().toArray();
+        for(int val : result_b) System.out.print(val+" ");
+
+
     }
 
 }
