@@ -1,16 +1,18 @@
 package sorting;
 
+import java.util.Arrays;
+
 public class SelectionSort {
 
 
     public static void main(String[] args) {
-        int[] arr = {12,4,1,9,6};
-        arr= selectionSort(arr);
-        for(int a: arr){
-            System.out.print(a +" ");
-        }
+        int[] arr = {8,2,3,10,15};//{12,4,1,9,6};
+        arr= selectionSort2(arr);
+        System.out.println(Arrays.toString(arr));
+//        for(int a: arr){
+//            System.out.print(a +" ");
+//        }
     }
-
 
     static int[] selectionSort(int [] arr){
         for(int i=0; i<arr.length-1; i++){
@@ -26,4 +28,21 @@ public class SelectionSort {
         }
         return arr;
     }
+
+    static int[] selectionSort2(int [] arr){
+        int n = arr.length-1;
+        for(int i=0; i<n; i++){
+            int max_idx = 0;
+            for(int j=0; j<arr.length-i; j++){
+                if(arr[j] > arr[max_idx]){
+                    max_idx =j;
+                }
+            }
+            int temp = arr[n-i];
+            arr[n-i] = arr[max_idx];
+            arr[max_idx] = temp;
+        }
+        return arr;
+    }
+
 }
